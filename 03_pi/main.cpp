@@ -98,6 +98,7 @@ void printKernelInfo(const cl::Kernel& kernel, const cl::Device& device)
   printf("Kernel work group size: %lu\r\n", kernelWorkGroupSize);
   printf("Kernel preferred work group size multiple: %lu\r\n", kernelPreferredWorkGroupSizeMultiple);
   printf("Kernel private memory size: %lu bytes\r\n", kernelPrivateMemSize);
+  printf("Kernel local memory size: %lu bytes\r\n", kernelLocalMemSize);
 }
 
 /* ========== Application ========== */
