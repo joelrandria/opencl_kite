@@ -105,7 +105,7 @@ void printKernelInfo(const cl::Kernel& kernel, const cl::Device& device)
 
 #define OPENCL_DEVICE_ID	0
 #define PROGRAM_FILENAME	"pi.cl"
-#define INTEGRAL_SUBDIV_COUNT	1024
+#define INTEGRAL_SUBDIV_COUNT	2048
 
 void computePiWithOneWIPerIteration(const cl::Context& context,
 				    const cl::Program& program,
@@ -137,7 +137,7 @@ void computePiWithOneWIPerIteration(const cl::Context& context,
   d_groupAreas = cl::Buffer(context, CL_MEM_WRITE_ONLY, sizeof(float) * workGroupCount);
 
   cl::make_kernel<cl::LocalSpaceArg, cl::Buffer> kernelFunc(kernel);
-  kernelFunc(cl::EnqueueArgs(queue, cl::NDRange(INTEGRAL_SUBDIV_COUNT)),
+  kernelFunc(cl::EnqueueArgs(queue, cl::NDRange(INTEGRAL_SUBDIV_COUNT), cl::NDRange(workGroupSize)),
 	     cl::Local(sizeof(float) * workGroupSize),
 	     d_groupAreas);
 
@@ -151,7 +151,7 @@ void computePiWithOneWIPerIteration(const cl::Context& context,
     pi += h_groupAreas[i];
 
   printf("\r\n");
-  printf("Résultat: %f\r\n", pi);
+  printf("Résultat: %.10f\r\n", pi);
   printf("Execute en %lu us\r\n", timer.getTimeMicroseconds());
 }
 
